@@ -1,13 +1,13 @@
 #import <Cordova/CDV.h>
-@import MLKitTextRecognition;
+@import MLKitObjectDetection;
 
-@interface Mltext : CDVPlugin
+@interface MlObjectDetect : CDVPlugin
 
 @property CDVInvokedUrlCommand* commandglo;
 // @property GMVDetector* textDetector;
 @property UIImage* image;
 
-- (void) getText:(CDVInvokedUrlCommand*)command;
+- (void) detectObject:(CDVInvokedUrlCommand*)command;
 - (UIImage *)resizeImage:(UIImage *)image;
 - (NSData *)retrieveAssetDataPhotosFramework:(NSURL *)urlMedia;
 

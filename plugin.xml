@@ -1,75 +1,68 @@
-<?xml version="1.0" encoding="utf-8"?>
-<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
-        id="cordova-plugin-ml-text"
-        version="3.0.0">
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="cordova-plugin-ml-kit-object-detect"
+        version="0.0.1">
 
-  <name>Mltext</name>
+  <name>ML Kit Object Detection</name>
 
   <engines>
-    <engine name="cordova-android" version=">=6.4.0" />
-    <engine name="cordova-ios" version=">=4.3.0" />
+    <engine name="cordova" version=">=9.0.0"/>
+    <engine name="cordova-android" version=">=8.0.0"/>
+    <engine name="cordova-ios" version=">=6.0.0"/>
   </engines>
 
-  <asset src="www/gettext.js" target="js/gettext.js"/>
-  
-  <js-module src="www/gettext.js" name="gettext">
-    <clobbers target="mltext" />
+  <asset src="www/detectObject.js"
+         target="js/detectObject.js"/>
+
+  <js-module src="www/detectObject.js"
+             name="detectObject">
+    <clobbers target="mlobjectdetect" />
   </js-module>
 
   <platform name="android">
-
-    <config-file target="res/xml/config.xml" parent="/*">
-      <feature name="Mltext">
-        <param name="android-package" value="com.neutrinos.mltextplugin.Mltext"/>
+    <config-file target="res/xml/config.xml"
+                 parent="/*">
+      <feature name="MlObjectDetect">
+        <param name="android-package"
+               value="com.hvaughan3.mlobjectdetectplugin.MlObjectDetect"/>
       </feature>
-    </config-file> 
-
-    <preference name="MLKIT_TEXT_RECOGNITION_VERSION" default="16.1.0"/>
-
-    <config-file target="AndroidManifest.xml" parent="/*">
-            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-            <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-            <meta-data
-		      android:name="com.google.mlkit.vision.DEPENDENCIES"
-		      android:value="ocr" />
     </config-file>
-   
-    <source-file src="src/android/Mltext.java" target-dir="src/com/neutrinos/mltextplugin/" />
-    <framework src="com.google.android.gms:play-services-mlkit-text-recognition:$MLKIT_TEXT_RECOGNITION_VERSION" />
-  
+
+    <preference name="MLKIT_OBJECT_RECOGNITION_VERSION"
+                default="16.2.5"/>
+
+    <config-file target="AndroidManifest.xml"
+                 parent="/*">
+      <meta-data android:name="com.google.mlkit.vision.DEPENDENCIES"
+                 android:value="ocr" />
+    </config-file>
+
+    <source-file src="src/android/MlObjectDetect.java"
+                 target-dir="src/com/hvaughan3/mlobjectdetectplugin/" />
+    <framework src="com.google.mlkit:object-detection:$MLKIT_OBJECT_RECOGNITION_VERSION" />
   </platform>
 
-
   <platform name="ios">
-  <config-file target="config.xml" parent="/*">
-    <feature name="Mltext">
-      <param name="ios-package" value="Mltext" />
-    </feature>
-  </config-file>
-  
-  
-  <preference name="CAMERA_USAGE_DESCRIPTION" default="This app needs camera access"/>
-  <config-file target="*-Info.plist" parent="NSCameraUsageDescription">
-      <string>$CAMERA_USAGE_DESCRIPTION</string>
-  </config-file>
-  
-  <preference name="PHOTOLIBRARY_USAGE_DESCRIPTION" default="This app needs read/write-access photo library access"/>
-  <config-file target="*-Info.plist" parent="NSPhotoLibraryUsageDescription">
-      <string>$PHOTOLIBRARY_USAGE_DESCRIPTION</string>
-  </config-file>
+    <config-file target="config.xml"
+                 parent="/*">
+      <feature name="MlObjectDetect">
+        <param name="ios-package"
+               value="MlObjectDetect" />
+      </feature>
+    </config-file>
 
-<header-file src="src/ios/Mltext.h" target-dir="MltextPlugin"/>
-<source-file src="src/ios/Mltext.m" target-dir="MltextPlugin"/>
+    <header-file src="src/ios/MlObjectDetect.h"
+                 target-dir="MlObjectDetectPlugin"/>
+    <source-file src="src/ios/MlObjectDetect.m"
+                 target-dir="MlObjectDetectPlugin"/>
 
     <podspec>
       <config>
-        <source url="https://github.com/CocoaPods/Specs.git"/>
+        <source url="https://cdn.cocoapods.org/"/>
       </config>
       <pods use-frameworks="true">
-        <pod name="MLKitTextRecognition" />
+        <pod name="MLKitObjectDetection" />
       </pods>
     </podspec>
-
-</platform>
-
+  </platform>
 </plugin>

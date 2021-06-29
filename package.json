@@ -1,12 +1,12 @@
 {
-  "name": "cordova-plugin-ml-text",
-  "version": "3.0.0",
+  "name": "cordova-plugin-ml-kit-object-detect",
+  "version": "0.0.1",
   "repository": {
     "type": "git",
-    "url": "https://github.com/NeutrinosPlatform/cordova-plugin-ml-text"
+    "url": "https://github.com/hvaughan3/cordova-plugin-ml-kit-object-detect"
   },
   "cordova": {
-    "id": "cordova-plugin-ml-text",
+    "id": "cordova-plugin-ml-kit-object-detect",
     "platforms": [
       "android",
       "ios"
@@ -14,25 +14,28 @@
   },
   "keywords": [
     "cordova",
-    "text",
-    "ocr",
-    "ML Kit",
+    "google",
+    "ml",
+    "kit",
     "machine learning",
-    "text recognition",
-    "optical",
-    "character",
-    "recognition",
+    "object",
+    "object detect",
+    "object detection",
+    "object recognition",
+    "edge",
+    "edge detect",
+    "edge detection",
     "ecosystem:cordova",
     "cordova-android",
-    "cordova-ios",
-    "mobile ocr"
+    "cordova-ios"
   ],
   "engines": {
     "cordovaDependencies": {
-      "cordova-android": ">=6.4.0",
-      "cordova-ios": ">=4.3.0"}
+      "cordova-android": ">=8.0.0",
+      "cordova-ios": ">=6.0.0"
+    }
   },
-  "author": "jatahworx",
+  "author": "hvaughan3",
   "license": "ISC",
-  "description": "cordova plugin for mobile ocr text recognition"
+  "description": "Cordova plugin for Google ML Kit object detection."
 }
