@@ -31,12 +31,6 @@
     <preference name="MLKIT_OBJECT_RECOGNITION_VERSION"
                 default="16.2.5"/>
 
-    <config-file target="AndroidManifest.xml"
-                 parent="/*">
-      <meta-data android:name="com.google.mlkit.vision.DEPENDENCIES"
-                 android:value="ocr" />
-    </config-file>
-
     <source-file src="src/android/MlObjectDetect.java"
                  target-dir="src/com/hvaughan3/mlobjectdetectplugin/" />
     <framework src="com.google.mlkit:object-detection:$MLKIT_OBJECT_RECOGNITION_VERSION" />
