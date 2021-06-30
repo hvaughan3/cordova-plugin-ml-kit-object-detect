@@ -257,12 +257,14 @@ public class MlObjectDetect extends CordovaPlugin {
         }
       }
 
+      Log.d(TAG, "Camera ID: " + cameraId);
+
       return cameraId;
     } catch (CameraAccessException e) {
       e.printStackTrace();
     }
 
-    Log.d(TAG, "Camera ID: " + cameraId);
+    Log.d(TAG, "Camera ID not found");
 
     return null;
   }
