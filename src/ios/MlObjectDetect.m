@@ -2,14 +2,14 @@
 #import <Photos/Photos.h>
 #import <MLKitVision/MLKitVision.h>
 
-@implementation Mltext
+@implementation MlObjectDetect
 #define NORMFILEURI ((int) 0)
 #define NORMNATIVEURI ((int) 1)
 #define FASTFILEURI ((int) 2)
 #define FASTNATIVEURI ((int) 3)
 #define BASE64 ((int) 4)
 
-- (void)getText:(CDVInvokedUrlCommand*)command {
+- (void)detectObject:(CDVInvokedUrlCommand*)command {
     [self.commandDelegate runInBackground:^{
         @try {
             self.commandglo = command;
@@ -88,7 +88,8 @@
                         return;
                     }
 
-                    NSLog(@"ObjectDetection - Objects found: " + objects.count);
+                    NSString *countString = [NSString stringWithFormat: @"ObjectDetection - Objects found: %lu", (unsigned long)objects.count];
+                    NSLog(@"%@", countString);
 
                     // The list of detected objects contains one item if multiple
                     // object detection wasn't enabled.
@@ -96,9 +97,9 @@
                         CGRect frame = object.frame;
                         NSNumber *trackingID = object.trackingID;
                         for (MLKObjectLabel *label in object.labels) {
-                            NSString *labelString = [NSString stringWithFormat: @"%@, %f, %lu",
+                            NSString *labelString = [NSString stringWithFormat: @"ObjectDetection - Object: %@, %f, %lu",
                             label.text, label.confidence, (unsigned long)label.index];
-                            NSLog(@"ObjectDetection - Object: " + labelString);
+                            NSLog(@"%@", labelString);
                         }
                     }
 
@@ -310,13 +311,13 @@
             } else {
                 CDVPluginResult* result = [CDVPluginResult
                                            resultWithStatus:CDVCommandStatus_ERROR
-                                           messageAsString:@"Error in uri or base64 data!"];
+                                           messageAsString:@"Object Detection Error in uri or base64 data!"];
                 [self.commandDelegate sendPluginResult:result callbackId: self.commandglo.callbackId];
             }
         } @catch (NSException *exception) {
             CDVPluginResult* result = [CDVPluginResult
                                        resultWithStatus:CDVCommandStatus_ERROR
-                                       messageAsString:@"Main loop Exception"];
+                                       messageAsString:@"Object Detection Main loop Exception"];
             [self.commandDelegate sendPluginResult:result callbackId: self.commandglo.callbackId];
         }
     }];
@@ -326,11 +327,11 @@
 -(UIImage *)resizeImage:(UIImage *)image {
     float actualHeight = image.size.height;
     float actualWidth = image.size.width;
-    float maxHeight = 600;
-    float maxWidth = 600;
+    float maxHeight = 300;
+    float maxWidth = 300;
     float imgRatio = actualWidth/actualHeight;
     float maxRatio = maxWidth/maxHeight;
-    float compressionQuality = 0.50;//50 percent compression
+    float compressionQuality = 1;//50 percent compression
 
     if (actualHeight > maxHeight || actualWidth > maxWidth) {
         if(imgRatio < maxRatio) {
