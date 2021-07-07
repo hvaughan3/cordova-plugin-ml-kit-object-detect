@@ -75,7 +75,7 @@
                             NSDictionary *resultobj = [NSDictionary dictionaryWithDictionary:resultobjmut];
 
                             CDVPluginResult* resultcor = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:resultobj];
-                            [self.commandDelegate sendPluginResult:resultcor callbackId:_commandglo.callbackId];
+                          [self.commandDelegate sendPluginResult:resultcor callbackId:self->_commandglo.callbackId];
 
                             //   CDVPluginResult* resulta = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"No text found in image"];
                             //   [self.commandDelegate sendPluginResult:resulta callbackId: self.commandglo.callbackId];
@@ -103,12 +103,12 @@
                         }
                     }
 
-                    NSNumber *foundObjects = objects.count;
+                    NSString *foundObjects = [NSString stringWithFormat:@"%@", @(objects.count)];
                     resultobjmut = [[[NSDictionary alloc] initWithObjectsAndKeys: foundObjects, @"foundObjects", nil] mutableCopy];
                     NSDictionary *resultobj = [NSDictionary dictionaryWithDictionary:resultobjmut];
 
                     CDVPluginResult* resultcor = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:resultobj];
-                    [self.commandDelegate sendPluginResult:resultcor callbackId:_commandglo.callbackId];
+                  [self.commandDelegate sendPluginResult:resultcor callbackId:self->_commandglo.callbackId];
 
                     // NSMutableDictionary* blockobj = [[NSMutableDictionary alloc] init];
                     // NSMutableDictionary* lineobj = [[NSMutableDictionary alloc] init];
