@@ -1,6 +1,9 @@
 #import <Cordova/CDV.h>
 @import MLKitObjectDetection;
 @import MLKitObjectDetectionCommon;
+@import MLKitObjectDetectionCustom;
+@import MLKitCommon;
+@import MLKitVision;
 
 @interface MlObjectDetect : CDVPlugin
 

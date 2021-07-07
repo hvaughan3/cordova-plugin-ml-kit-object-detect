@@ -9,6 +9,9 @@
 #define FASTNATIVEURI ((int) 3)
 #define BASE64 ((int) 4)
 
+static NSString *const localModelFileName = @"custom1";
+static NSString *const localModelFileType = @"tflite";
+
 - (void)detectObject:(CDVInvokedUrlCommand*)command {
     [self.commandDelegate runInBackground:^{
         @try {
@@ -31,6 +34,7 @@
                 if (stype==NORMFILEURI) {
                     NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:name]];
                     self.image = [UIImage imageWithData:imageData];
+                    self.image = [self resizeImage:self.image];
                 } else if (stype==NORMNATIVEURI) {
                     NSString *urlString = [NSString stringWithFormat:@"%@", name];
                     NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
@@ -58,9 +62,20 @@
             }
 
             if (self.image != NULL) {
-                MLKObjectDetectorOptions *options = [[MLKOptions alloc] init];
+                NSString *localModelPath = [[NSBundle mainBundle] pathForResource:localModelFileName ofType:localModelFileType];
+                MLKLocalModel *localModel = [[MLKLocalModel alloc] initWithPath:localModelPath];
+
+                MLKCustomObjectDetectorOptions *options = [[MLKCustomObjectDetectorOptions alloc] initWithLocalModel:localModel];
                 options.detectorMode = MLKObjectDetectorModeSingleImage;
                 options.shouldEnableClassification = YES;
+                options.shouldEnableMultipleObjects = YES;
+                options.classificationConfidenceThreshold = @(0.1);
+                options.maxPerObjectLabelCount = 1;
+
+                // MLKObjectDetectorOptions *options = [[MLKOptions alloc] init];
+                // options.detectorMode = MLKObjectDetectorModeSingleImage;
+                // options.shouldEnableClassification = YES;
+
                 MLKObjectDetector *objectDetector = [MLKObjectDetector objectDetectorWithOptions:options];
 
                 MLKVisionImage *image = [[MLKVisionImage alloc] initWithImage:self.image];
