@@ -79,7 +79,10 @@ static NSString *const localModelFileType = @"tflite";
                 MLKObjectDetector *objectDetector = [MLKObjectDetector objectDetectorWithOptions:options];
 
                 MLKVisionImage *image = [[MLKVisionImage alloc] initWithImage:self.image];
-                image.orientation = self.image.imageOrientation;
+                UIImageOrientation orientation = [MlObjectUtil imageOrientationFromDevicePosition:AVCaptureDevicePositionBack];
+                
+                image.orientation = orientation;
+              
                 [objectDetector processImage:image completion:^(NSArray *_Nullable objects, NSError *_Nullable error) {
                     NSMutableDictionary* resultobjmut = [[NSMutableDictionary alloc] init];
                     if (error != nil || objects == nil || objects.count == 0) {
@@ -330,10 +333,9 @@ static NSString *const localModelFileType = @"tflite";
                 [self.commandDelegate sendPluginResult:result callbackId: self.commandglo.callbackId];
             }
         } @catch (NSException *exception) {
-            CDVPluginResult* result = [CDVPluginResult
-                                       resultWithStatus:CDVCommandStatus_ERROR
-                                       messageAsString:@"Object Detection Main loop Exception"];
-            [self.commandDelegate sendPluginResult:result callbackId: self.commandglo.callbackId];
+            CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:exception.reason];
+            NSLog(@"Object Detection Exception: %@", exception.reason);
+            [self.commandDelegate sendPluginResult:pluginResult callbackId: self.commandglo.callbackId];
         }
     }];
 }
@@ -342,8 +344,8 @@ static NSString *const localModelFileType = @"tflite";
 -(UIImage *)resizeImage:(UIImage *)image {
     float actualHeight = image.size.height;
     float actualWidth = image.size.width;
-    float maxHeight = 300;
-    float maxWidth = 300;
+    float maxHeight = 320;
+    float maxWidth = 320;
     float imgRatio = actualWidth/actualHeight;
     float maxRatio = maxWidth/maxHeight;
     float compressionQuality = 1;//50 percent compression
